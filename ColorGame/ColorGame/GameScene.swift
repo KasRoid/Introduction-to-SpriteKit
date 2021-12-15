@@ -22,6 +22,29 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.previousLocation(in: self)
+            let node = nodes(at: location).first
+            
+            if node?.name == "right" {
+                print("Right")
+            } else if node?.name == "up" {
+                print("Up")
+            } else if node?.name == "down" {
+                print("Down")
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
     func createPlayer() {
         player = SKSpriteNode(imageNamed: "player")
         guard let playerPosition = tracksArray?.first?.position.x else { return }
