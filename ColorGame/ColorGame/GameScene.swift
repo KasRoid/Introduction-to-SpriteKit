@@ -13,6 +13,11 @@ class GameScene: SKScene {
     var tracksArray: [SKSpriteNode]? = [SKSpriteNode]()
     var player: SKSpriteNode?
     
+    var currentTrack = 0
+    var movingToTrack = false
+    
+    let moveSound = SKAction.playSoundFileNamed("move.wav", waitForCompletion: false)
+    
     override func didMove(to view: SKView) {
         setupTracks()
         createPlayer()
@@ -28,7 +33,7 @@ class GameScene: SKScene {
             let node = nodes(at: location).first
             
             if node?.name == "right" {
-                print("Right")
+                moveToNextTrack()
             } else if node?.name == "up" {
                 moveVertically(up: true)
             } else if node?.name == "down" {
@@ -38,7 +43,9 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player?.removeAllActions()
+        if !movingToTrack {
+            player?.removeAllActions()
+        }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,6 +76,19 @@ class GameScene: SKScene {
             let moveAction = SKAction.moveBy(x: 0, y: -3, duration: 0.01)
             let repeatAction = SKAction.repeatForever(moveAction)
             player?.run(repeatAction)
+        }
+    }
+    
+    func moveToNextTrack() {
+        player?.removeAllActions()
+        movingToTrack = true
+        
+        guard let nextTrack = tracksArray?[currentTrack + 1].position else { return }
+        if let player = player {
+            let moveAction = SKAction.move(to: CGPoint(x: nextTrack.x, y: player.position.y), duration: 0.2)
+            player.run(moveAction, completion: { self.movingToTrack = false })
+            currentTrack += 1
+            run(moveSound)
         }
     }
 }
