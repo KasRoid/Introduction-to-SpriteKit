@@ -19,10 +19,25 @@ class GameScene: SKScene {
     
     let moveSound = SKAction.playSoundFileNamed("move.wav", waitForCompletion: false)
     
+    let trackVelocities = [180, 200, 250]
+    var directionArray = [Bool]()
+    var velocityArray = [Int]()
+    
     // MARK: - Lifecycle
     override func didMove(to view: SKView) {
         setupTracks()
         createPlayer()
+        if let numberOfTracks = tracksArray?.count {
+            for _ in 0...numberOfTracks {
+                let randomNumberForVelocity = GKRandomSource.sharedRandom().nextInt(upperBound: 3)
+                velocityArray.append(trackVelocities[randomNumberForVelocity])
+                directionArray.append(GKRandomSource.sharedRandom().nextBool())
+            }
+        }
+        run(SKAction.repeatForever(SKAction.sequence([
+            SKAction.run { self.spawnEnemies() },
+            SKAction.wait(forDuration: 2)
+        ])))
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -65,6 +80,53 @@ class GameScene: SKScene {
         player?.addChild(pulse)
         pulse.position = CGPoint(x: 0, y: 0)
         
+    }
+    
+    func createEnemy(type: Enemies, forTrack track: Int) -> SKShapeNode? {
+        let enemySprite = SKShapeNode()
+                enemySprite.name = "ENEMY"
+        switch type {
+        case .small:
+            enemySprite.path = CGPath(roundedRect: CGRect(x: -10, y: 0, width: 20, height: 70),
+                                      cornerWidth: 8,
+                                      cornerHeight: 8,
+                                      transform: nil)
+            enemySprite.fillColor = UIColor(red: 0.4431, green: 0.5529, blue: 0.7451, alpha: 1)
+        case .meduim:
+            enemySprite.path = CGPath(roundedRect: CGRect(x: -10, y: 0, width: 20, height: 100),
+                                      cornerWidth: 8,
+                                      cornerHeight: 8,
+                                      transform: nil)
+            enemySprite.fillColor = UIColor(red: 0.7804, green: 0.4039, blue: 0.4039, alpha: 1)
+        case .large:
+            enemySprite.path = CGPath(roundedRect: CGRect(x: -10, y: 0, width: 20, height: 130),
+                                      cornerWidth: 8,
+                                      cornerHeight: 8,
+                                      transform: nil)
+            enemySprite.fillColor = UIColor(red: 0.7804, green: 0.6392, blue: 0.4039, alpha: 1)
+        }
+        guard let enemyPosition = tracksArray?[track].position else { return nil }
+        let up = directionArray[track]
+        enemySprite.position.x = enemyPosition.x
+        enemySprite.position.y = up ? -130 : size.height + 130
+        enemySprite.physicsBody = SKPhysicsBody(edgeLoopFrom: enemySprite.path!)
+        enemySprite.physicsBody?.velocity = up ? CGVector(dx: 0, dy: velocityArray[track]) : CGVector(dx: 0, dy: -velocityArray[track])
+        return enemySprite
+    }
+    
+    func spawnEnemies() {
+        for i in 1...7 {
+            let randomEnemyType = Enemies(rawValue: GKRandomSource.sharedRandom().nextInt(upperBound: 3))!
+            if let newEnemy = createEnemy(type: randomEnemyType, forTrack: i) {
+                addChild(newEnemy)
+            }
+        }
+        enumerateChildNodes(withName: "ENEMY",
+                            using: { node, _ in
+            if node.position.y < -150 || node.position.y > self.size.height + 150 {
+                node.removeFromParent()
+            }
+        })
     }
     
     func setupTracks() {

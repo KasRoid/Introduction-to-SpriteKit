@@ -24,6 +24,7 @@
 		428CBBB22769FFCC006E8726 /* levelUp.wav in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBAB2769FFCC006E8726 /* levelUp.wav */; };
 		428CBBB4276A163B006E8726 /* pulse.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBB3276A163B006E8726 /* pulse.sks */; };
 		428CBBB6276A16B6006E8726 /* fireworks.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBB5276A16B6006E8726 /* fireworks.sks */; };
+		428CBBB8276A3362006E8726 /* Enemies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CBBB7276A3362006E8726 /* Enemies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		428CBBAB2769FFCC006E8726 /* levelUp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = levelUp.wav; sourceTree = "<group>"; };
 		428CBBB3276A163B006E8726 /* pulse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = pulse.sks; sourceTree = "<group>"; };
 		428CBBB5276A16B6006E8726 /* fireworks.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fireworks.sks; sourceTree = "<group>"; };
+		428CBBB7276A3362006E8726 /* Enemies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				428CBB8F2769FF47006E8726 /* GameScene.sks */,
 				428CBB912769FF47006E8726 /* Actions.sks */,
 				428CBB932769FF47006E8726 /* GameScene.swift */,
+				428CBBB7276A3362006E8726 /* Enemies.swift */,
 				428CBBB5276A16B6006E8726 /* fireworks.sks */,
 				428CBBB3276A163B006E8726 /* pulse.sks */,
 				428CBB952769FF47006E8726 /* GameViewController.swift */,
@@ -190,6 +193,7 @@
 			files = (
 				428CBB942769FF47006E8726 /* GameScene.swift in Sources */,
 				428CBB962769FF47006E8726 /* GameViewController.swift in Sources */,
+				428CBBB8276A3362006E8726 /* Enemies.swift in Sources */,
 				428CBB8E2769FF47006E8726 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
