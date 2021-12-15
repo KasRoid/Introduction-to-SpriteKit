@@ -22,6 +22,8 @@
 		428CBBB02769FFCC006E8726 /* levelCompleted.wav in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBA92769FFCC006E8726 /* levelCompleted.wav */; };
 		428CBBB12769FFCC006E8726 /* fail.wav in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBAA2769FFCC006E8726 /* fail.wav */; };
 		428CBBB22769FFCC006E8726 /* levelUp.wav in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBAB2769FFCC006E8726 /* levelUp.wav */; };
+		428CBBB4276A163B006E8726 /* pulse.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBB3276A163B006E8726 /* pulse.sks */; };
+		428CBBB6276A16B6006E8726 /* fireworks.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBBB5276A16B6006E8726 /* fireworks.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		428CBBA92769FFCC006E8726 /* levelCompleted.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = levelCompleted.wav; sourceTree = "<group>"; };
 		428CBBAA2769FFCC006E8726 /* fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fail.wav; sourceTree = "<group>"; };
 		428CBBAB2769FFCC006E8726 /* levelUp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = levelUp.wav; sourceTree = "<group>"; };
+		428CBBB3276A163B006E8726 /* pulse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = pulse.sks; sourceTree = "<group>"; };
+		428CBBB5276A16B6006E8726 /* fireworks.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fireworks.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 				428CBB8F2769FF47006E8726 /* GameScene.sks */,
 				428CBB912769FF47006E8726 /* Actions.sks */,
 				428CBB932769FF47006E8726 /* GameScene.swift */,
+				428CBBB5276A16B6006E8726 /* fireworks.sks */,
+				428CBBB3276A163B006E8726 /* pulse.sks */,
 				428CBB952769FF47006E8726 /* GameViewController.swift */,
 				428CBB972769FF47006E8726 /* Main.storyboard */,
 				428CBBA42769FFCC006E8726 /* Sounds */,
@@ -162,6 +168,7 @@
 				428CBB902769FF47006E8726 /* GameScene.sks in Resources */,
 				428CBBAF2769FFCC006E8726 /* background.wav in Resources */,
 				428CBBB02769FFCC006E8726 /* levelCompleted.wav in Resources */,
+				428CBBB6276A16B6006E8726 /* fireworks.sks in Resources */,
 				428CBBB22769FFCC006E8726 /* levelUp.wav in Resources */,
 				428CBB9B2769FF4A006E8726 /* Assets.xcassets in Resources */,
 				428CBBAD2769FFCC006E8726 /* move.wav in Resources */,
@@ -169,6 +176,7 @@
 				428CBB922769FF47006E8726 /* Actions.sks in Resources */,
 				428CBBB12769FFCC006E8726 /* fail.wav in Resources */,
 				428CBBAE2769FFCC006E8726 /* MenuHighscoreMusic.mp3 in Resources */,
+				428CBBB4276A163B006E8726 /* pulse.sks in Resources */,
 				428CBBAC2769FFCC006E8726 /* powerUp.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,6 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    // MARK: - Properties
     var tracksArray: [SKSpriteNode]? = [SKSpriteNode]()
     var player: SKSpriteNode?
     
@@ -18,6 +19,7 @@ class GameScene: SKScene {
     
     let moveSound = SKAction.playSoundFileNamed("move.wav", waitForCompletion: false)
     
+    // MARK: - Lifecycle
     override func didMove(to view: SKView) {
         setupTracks()
         createPlayer()
@@ -52,11 +54,17 @@ class GameScene: SKScene {
         player?.removeAllActions()
     }
     
+    // MARK: - Helpers
     func createPlayer() {
         player = SKSpriteNode(imageNamed: "player")
         guard let playerPosition = tracksArray?.first?.position.x else { return }
         player?.position = CGPoint(x: playerPosition, y: size.height / 2)
         addChild(player!)
+        
+        let pulse = SKEmitterNode(fileNamed: "pulse")!
+        player?.addChild(pulse)
+        pulse.position = CGPoint(x: 0, y: 0)
+        
     }
     
     func setupTracks() {
