@@ -30,19 +30,19 @@ class GameScene: SKScene {
             if node?.name == "right" {
                 print("Right")
             } else if node?.name == "up" {
-                print("Up")
+                moveVertically(up: true)
             } else if node?.name == "down" {
-                print("Down")
+                moveVertically(up: false)
             }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        player?.removeAllActions()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        player?.removeAllActions()
     }
     
     func createPlayer() {
@@ -57,6 +57,18 @@ class GameScene: SKScene {
             if let track = childNode(withName: "\(i)") as? SKSpriteNode {
                 tracksArray?.append(track)
             }
+        }
+    }
+    
+    func moveVertically(up: Bool) {
+        if up {
+            let moveAction = SKAction.moveBy(x: 0, y: 3, duration: 0.01)
+            let repeatAction = SKAction.repeatForever(moveAction)
+            player?.run(repeatAction)
+        } else {
+            let moveAction = SKAction.moveBy(x: 0, y: -3, duration: 0.01)
+            let repeatAction = SKAction.repeatForever(moveAction)
+            player?.run(repeatAction)
         }
     }
 }
