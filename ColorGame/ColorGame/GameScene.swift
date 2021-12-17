@@ -48,7 +48,11 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        if let player = player {
+            if player.position.y > size.height || player.position.y < 0 {
+                movePlayerToStart()
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -192,6 +196,25 @@ class GameScene: SKScene {
             run(moveSound)
         }
     }
+    
+    func movePlayerToStart() {
+        if let player = player {
+            player.removeFromParent()
+            self.player = nil
+            createPlayer()
+            currentTrack = 0
+        }
+    }
+    
+    func nextLevel(playerPhysicsBody: SKPhysicsBody) {
+        let emitter = SKEmitterNode(fileNamed: "fireworks.sks")!
+        playerPhysicsBody.node?.addChild(emitter)
+        run(SKAction.wait(forDuration: 0.5),
+            completion: {
+            emitter.removeFromParent()
+            self.movePlayerToStart()
+        })
+    }
 }
 
 // MARK: - SKPhysicsContactDelegate
@@ -208,9 +231,9 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == enemyCategory {
-            print("Enemy hit")
+            movePlayerToStart()
         } else if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == targetCategory {
-            print("Target hit")
+            nextLevel(playerPhysicsBody: playerBody)
         }
     }
 }
