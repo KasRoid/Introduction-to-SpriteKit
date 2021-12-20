@@ -14,8 +14,14 @@ class StartScene: SKScene {
     var gameScene: SKScene!
     var backgroundMusic: SKAudioNode!
     
+    var scrollingBG: ScrollingBackground?
+    
     override func didMove(to view: SKView) {
-        playButton = self.childNode(withName: "startButton") as? SKSpriteNode
+        playButton = childNode(withName: "startButton") as? SKSpriteNode
+        scrollingBG = ScrollingBackground.scrollingNodeWithImage(imageName: "loopBG", containerWidth: size.width)
+        scrollingBG?.scrollingSpeed = 1.5
+        scrollingBG?.anchorPoint = .zero
+        addChild(scrollingBG!)
         
         if let musicURL = Bundle.main.url(forResource: "MenuHighscoreMusic", withExtension: "mp3") {
             backgroundMusic = SKAudioNode(url: musicURL)
@@ -23,10 +29,15 @@ class StartScene: SKScene {
         }
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        guard let scrollingBG = scrollingBG else { return }
+        scrollingBG.update(currentTime: currentTime)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
             let pos = touch.location(in: self)
-            let node = self.atPoint(pos)
+            let node = atPoint(pos)
             
             if node == playButton {
                 let transition = SKTransition.fade(withDuration: 1)
