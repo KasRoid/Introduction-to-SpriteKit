@@ -19,6 +19,7 @@ class GameScene: SKScene {
     var movingToTrack = false
     
     let moveSound = SKAction.playSoundFileNamed("move.wav", waitForCompletion: false)
+    var backgroundNoise: SKAudioNode!
     
     let trackVelocities = [180, 200, 250]
     var directionArray = [Bool]()
@@ -34,6 +35,11 @@ class GameScene: SKScene {
         createPlayer()
         createTarget()
         physicsWorld.contactDelegate = self
+        if let musicURL = Bundle.main.url(forResource: "background", withExtension: "wav") {
+            backgroundNoise = SKAudioNode(url: musicURL)
+            addChild(backgroundNoise)
+        }
+        
         if let numberOfTracks = tracksArray?.count {
             for _ in 0...numberOfTracks {
                 let randomNumberForVelocity = GKRandomSource.sharedRandom().nextInt(upperBound: 3)
@@ -71,7 +77,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !movingToTrack {
+    if !movingToTrack {
             player?.removeAllActions()
         }
     }
@@ -207,6 +213,7 @@ class GameScene: SKScene {
     }
     
     func nextLevel(playerPhysicsBody: SKPhysicsBody) {
+        run(SKAction.playSoundFileNamed("levelUp.wav", waitForCompletion: true))
         let emitter = SKEmitterNode(fileNamed: "fireworks.sks")!
         playerPhysicsBody.node?.addChild(emitter)
         run(SKAction.wait(forDuration: 0.5),
@@ -231,6 +238,7 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == enemyCategory {
+            run(SKAction.playSoundFileNamed("fail.wav", waitForCompletion: true))
             movePlayerToStart()
         } else if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == targetCategory {
             nextLevel(playerPhysicsBody: playerBody)
