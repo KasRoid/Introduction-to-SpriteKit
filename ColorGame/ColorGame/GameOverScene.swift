@@ -19,7 +19,9 @@ class GameOverScene : SKScene {
     
     override func didMove(to view: SKView) {
         lastScoreLabel = self.childNode(withName: "lastScoreLabel") as? SKLabelNode
+        lastScoreLabel?.text = "\(GameHandler.shared.score)"
         bestScoreLabel = self.childNode(withName: "bestScoreLabel") as? SKLabelNode
+        bestScoreLabel?.text = "\(GameHandler.shared.highScore)"
         playButton = self.childNode(withName: "startButton") as? SKSpriteNode
         
         if let musicURL = Bundle.main.url(forResource: "MenuHighscoreMusic", withExtension: "mp3") {

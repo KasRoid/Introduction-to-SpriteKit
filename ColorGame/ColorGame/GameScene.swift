@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var currentScore: Int = 0 {
         didSet {
             scoreLabel?.text = "SCORE: \(currentScore)"
+            GameHandler.shared.score = currentScore
         }
     }
     var remainingTime: TimeInterval = 60 {
@@ -294,6 +295,7 @@ class GameScene: SKScene {
     }
     
     func gameOver() {
+        GameHandler.shared.saveGameStats()
         run(SKAction.playSoundFileNamed("levelCompleted.wav", waitForCompletion: true))
         let transition = SKTransition.fade(withDuration: 1)
         if let gameOverScene = SKScene(fileNamed: "GameOverScene") {

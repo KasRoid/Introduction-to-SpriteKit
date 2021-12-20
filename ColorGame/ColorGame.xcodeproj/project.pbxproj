@@ -12,6 +12,7 @@
 		42632C2427705A7200E7D444 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 42632C2027705A7200E7D444 /* StartScene.sks */; };
 		42632C2527705A7200E7D444 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 42632C2127705A7200E7D444 /* GameOverScene.sks */; };
 		42632C272770744E00E7D444 /* ScrollingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C262770744D00E7D444 /* ScrollingBackground.swift */; };
+		42632C2927713FF600E7D444 /* GameHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2827713FF600E7D444 /* GameHandler.swift */; };
 		428CBB8E2769FF47006E8726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CBB8D2769FF47006E8726 /* AppDelegate.swift */; };
 		428CBB902769FF47006E8726 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBB8F2769FF47006E8726 /* GameScene.sks */; };
 		428CBB922769FF47006E8726 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 428CBB912769FF47006E8726 /* Actions.sks */; };
@@ -38,6 +39,7 @@
 		42632C2027705A7200E7D444 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
 		42632C2127705A7200E7D444 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 		42632C262770744D00E7D444 /* ScrollingBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingBackground.swift; sourceTree = "<group>"; };
+		42632C2827713FF600E7D444 /* GameHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHandler.swift; sourceTree = "<group>"; };
 		428CBB8A2769FF47006E8726 /* ColorGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		428CBB8D2769FF47006E8726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		428CBB8F2769FF47006E8726 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				42632C2027705A7200E7D444 /* StartScene.sks */,
 				42632C1F27705A7200E7D444 /* StartScene.swift */,
 				42632C262770744D00E7D444 /* ScrollingBackground.swift */,
+				42632C2827713FF600E7D444 /* GameHandler.swift */,
 				428CBBB5276A16B6006E8726 /* fireworks.sks */,
 				428CBBB3276A163B006E8726 /* pulse.sks */,
 				428CBB952769FF47006E8726 /* GameViewController.swift */,
@@ -212,6 +215,7 @@
 				42632C2327705A7200E7D444 /* StartScene.swift in Sources */,
 				428CBB942769FF47006E8726 /* GameScene.swift in Sources */,
 				42632C272770744E00E7D444 /* ScrollingBackground.swift in Sources */,
+				42632C2927713FF600E7D444 /* GameHandler.swift in Sources */,
 				428CBB962769FF47006E8726 /* GameViewController.swift in Sources */,
 				428CBBB8276A3362006E8726 /* Enemies.swift in Sources */,
 				428CBB8E2769FF47006E8726 /* AppDelegate.swift in Sources */,
