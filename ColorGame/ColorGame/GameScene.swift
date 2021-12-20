@@ -38,10 +38,11 @@ class GameScene: SKScene {
     let trackVelocities = [180, 200, 250]
     var directionArray = [Bool]()
     var velocityArray = [Int]()
-        
+    
     let playerCategory: UInt32 = 0x1 << 0
     let enemyCategory: UInt32 = 0x1 << 1
     let targetCategory: UInt32 = 0x1 << 2
+    let powerUpCategory: UInt32 = 0x1 << 3
     
     // MARK: - Lifecycle
     override func didMove(to view: SKView) {
@@ -96,7 +97,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if !movingToTrack {
+        if !movingToTrack {
             player?.removeAllActions()
         }
     }
@@ -112,7 +113,7 @@ class GameScene: SKScene {
         player?.physicsBody?.linearDamping = 0
         player?.physicsBody?.categoryBitMask = playerCategory
         player?.physicsBody?.collisionBitMask = 0
-        player?.physicsBody?.contactTestBitMask = enemyCategory | targetCategory
+        player?.physicsBody?.contactTestBitMask = enemyCategory | targetCategory | powerUpCategory
         
         guard let playerPosition = tracksArray?.first?.position.x else { return }
         player?.position = CGPoint(x: playerPosition, y: size.height / 2)
@@ -164,10 +165,22 @@ class GameScene: SKScene {
     }
     
     func spawnEnemies() {
+        var randomTrackNumber = 0
+        let createPowerUp = GKRandomSource.sharedRandom().nextBool()
+        
+        if createPowerUp {
+            randomTrackNumber = GKRandomSource.sharedRandom().nextInt(upperBound: 6) + 1
+            if let powerUpObject = self.createPowerUp(forTrack: randomTrackNumber) {
+                addChild(powerUpObject)
+            }
+        }
+        
         for i in 1...7 {
-            let randomEnemyType = Enemies(rawValue: GKRandomSource.sharedRandom().nextInt(upperBound: 3))!
-            if let newEnemy = createEnemy(type: randomEnemyType, forTrack: i) {
-                addChild(newEnemy)
+            if randomTrackNumber != i {
+                let randomEnemyType = Enemies(rawValue: GKRandomSource.sharedRandom().nextInt(upperBound: 3))!
+                if let newEnemy = createEnemy(type: randomEnemyType, forTrack: i) {
+                    addChild(newEnemy)
+                }
             }
         }
         enumerateChildNodes(withName: "ENEMY",
@@ -259,6 +272,22 @@ class GameScene: SKScene {
         )
         timeLabel?.run(timeAction)
     }
+    
+    func createPowerUp(forTrack track: Int) -> SKSpriteNode? {
+        let powerUpSprite = SKSpriteNode(imageNamed: "powerUp")
+        powerUpSprite.name = "ENEMY"
+        powerUpSprite.physicsBody = SKPhysicsBody(circleOfRadius: powerUpSprite.size.width / 2)
+        powerUpSprite.physicsBody?.linearDamping = 0
+        powerUpSprite.physicsBody?.categoryBitMask = powerUpCategory
+        powerUpSprite.physicsBody?.collisionBitMask = 0
+        
+        let up = directionArray[track]
+        guard let powerUpXPosition = tracksArray?[track].position.x else { return nil }
+        powerUpSprite.position.x = powerUpXPosition
+        powerUpSprite.position.y = up ? -130 : size.height + 130
+        powerUpSprite.physicsBody?.velocity = up ? CGVector(dx: 0, dy: velocityArray[track]) : CGVector(dx: 0, dy: -velocityArray[track])
+        return powerUpSprite
+    }
 }
 
 // MARK: - SKPhysicsContactDelegate
@@ -279,6 +308,10 @@ extension GameScene: SKPhysicsContactDelegate {
             movePlayerToStart()
         } else if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == targetCategory {
             nextLevel(playerPhysicsBody: playerBody)
+        } else if playerBody.categoryBitMask == playerCategory && otherBody.categoryBitMask == powerUpCategory {
+            run(SKAction.playSoundFileNamed("powerUp.wav", waitForCompletion: true))
+            otherBody.node?.removeFromParent()
+            remainingTime += 5
         }
     }
 }
