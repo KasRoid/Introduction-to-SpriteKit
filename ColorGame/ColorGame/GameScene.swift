@@ -15,6 +15,20 @@ class GameScene: SKScene {
     var player: SKSpriteNode?
     var target: SKSpriteNode?
     
+    // HUD
+    var timeLabel: SKLabelNode?
+    var scoreLabel: SKLabelNode?
+    var currentScore: Int = 0 {
+        didSet {
+            scoreLabel?.text = "SCORE: \(currentScore)"
+        }
+    }
+    var remainingTime: TimeInterval = 60 {
+        didSet {
+            timeLabel?.text = "TIME: \(Int(remainingTime))"
+        }
+    }
+    
     var currentTrack = 0
     var movingToTrack = false
     
@@ -24,7 +38,7 @@ class GameScene: SKScene {
     let trackVelocities = [180, 200, 250]
     var directionArray = [Bool]()
     var velocityArray = [Int]()
-    
+        
     let playerCategory: UInt32 = 0x1 << 0
     let enemyCategory: UInt32 = 0x1 << 1
     let targetCategory: UInt32 = 0x1 << 2
@@ -32,6 +46,8 @@ class GameScene: SKScene {
     // MARK: - Lifecycle
     override func didMove(to view: SKView) {
         setupTracks()
+        createHUD()
+        launchGameTimer()
         createPlayer()
         createTarget()
         physicsWorld.contactDelegate = self
@@ -58,6 +74,9 @@ class GameScene: SKScene {
             if player.position.y > size.height || player.position.y < 0 {
                 movePlayerToStart()
             }
+        }
+        if remainingTime <= 5 {
+            timeLabel?.fontColor = UIColor.red
         }
     }
     
@@ -213,6 +232,7 @@ class GameScene: SKScene {
     }
     
     func nextLevel(playerPhysicsBody: SKPhysicsBody) {
+        currentScore += 1
         run(SKAction.playSoundFileNamed("levelUp.wav", waitForCompletion: true))
         let emitter = SKEmitterNode(fileNamed: "fireworks.sks")!
         playerPhysicsBody.node?.addChild(emitter)
@@ -221,6 +241,23 @@ class GameScene: SKScene {
             emitter.removeFromParent()
             self.movePlayerToStart()
         })
+    }
+    
+    func createHUD() {
+        timeLabel = childNode(withName: "time") as? SKLabelNode
+        scoreLabel = childNode(withName: "score") as? SKLabelNode
+        remainingTime = 60
+        currentScore = 0
+    }
+    
+    func launchGameTimer() {
+        let timeAction = SKAction.repeatForever(
+            SKAction.sequence(
+                [SKAction.run { self.remainingTime -= 1},
+                 SKAction.wait(forDuration: 1)]
+            )
+        )
+        timeLabel?.run(timeAction)
     }
 }
 
