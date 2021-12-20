@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var target: SKSpriteNode?
     
     // HUD
+    var pause: SKSpriteNode?
     var timeLabel: SKLabelNode?
     var scoreLabel: SKLabelNode?
     var currentScore: Int = 0 {
@@ -92,11 +93,19 @@ class GameScene: SKScene {
             let node = nodes(at: location).first
             
             if node?.name == "right" {
-                moveToNextTrack()
+                if currentTrack < 8 {
+                    moveToNextTrack()
+                }
             } else if node?.name == "up" {
                 moveVertically(up: true)
             } else if node?.name == "down" {
                 moveVertically(up: false)
+            } else if node?.name == "pause", let scene = scene {
+                if scene.isPaused {
+                    scene.isPaused = false
+                } else {
+                    scene.isPaused = true
+                }
             }
         }
     }
@@ -262,6 +271,7 @@ class GameScene: SKScene {
     }
     
     func createHUD() {
+        pause = childNode(withName: "pause") as? SKSpriteNode
         timeLabel = childNode(withName: "time") as? SKLabelNode
         scoreLabel = childNode(withName: "score") as? SKLabelNode
         remainingTime = 60
