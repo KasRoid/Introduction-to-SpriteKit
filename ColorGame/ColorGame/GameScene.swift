@@ -79,6 +79,10 @@ class GameScene: SKScene {
         if remainingTime <= 5 {
             timeLabel?.fontColor = UIColor.red
         }
+        
+        if remainingTime == 0 {
+            gameOver()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -287,6 +291,15 @@ class GameScene: SKScene {
         powerUpSprite.position.y = up ? -130 : size.height + 130
         powerUpSprite.physicsBody?.velocity = up ? CGVector(dx: 0, dy: velocityArray[track]) : CGVector(dx: 0, dy: -velocityArray[track])
         return powerUpSprite
+    }
+    
+    func gameOver() {
+        run(SKAction.playSoundFileNamed("levelCompleted.wav", waitForCompletion: true))
+        let transition = SKTransition.fade(withDuration: 1)
+        if let gameOverScene = SKScene(fileNamed: "GameOverScene") {
+            gameOverScene.scaleMode = .aspectFit
+            view?.presentScene(gameOverScene, transition: transition)
+        }
     }
 }
 

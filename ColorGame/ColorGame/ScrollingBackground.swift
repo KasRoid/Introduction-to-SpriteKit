@@ -18,7 +18,7 @@ class ScrollingBackground: SKSpriteNode {
         var totalWidthNeeded: CGFloat = 0
         while totalWidthNeeded < width + bgImage.size.width {
             let child = SKSpriteNode(imageNamed: image)
-            child.anchorPoint = CGPoint(x: 0, y: 0.5)
+            child.anchorPoint = CGPoint.zero
             child.position = CGPoint(x: totalWidthNeeded, y: 0)
             scrollNode.addChild(child)
             totalWidthNeeded += child.size.width
